@@ -13,7 +13,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -22,7 +22,6 @@ void main() async {
     await GoogleSignIn.instance.initialize();
   }
 
-  // Initialize Services and Controllers
   Get.put(AuthService(), permanent: true);
   Get.put(AuthController(), permanent: true);
 
@@ -47,7 +46,6 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.outfitTextTheme(),
       ),
-      // Use Obx to listen to auth state changes for initial route
       home: Obx(() => authService.isLoggedIn ? HomeView() : LoginView()),
     );
   }
