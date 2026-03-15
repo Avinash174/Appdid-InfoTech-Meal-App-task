@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../model/meal_detail_model.dart';
+import '../core/theme/app_colors.dart';
+import '../core/utils/responsive_helper.dart';
 
 class MealDetailView extends StatelessWidget {
   final MealDetailModel meal;
@@ -15,10 +17,10 @@ class MealDetailView extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
-            expandedHeight: 400,
+            expandedHeight: ResponsiveHelper.h(45),
             pinned: true,
             stretch: true,
-            backgroundColor: const Color(0xFFE65100),
+            backgroundColor: AppColors.primaryDark,
             iconTheme: const IconThemeData(color: Colors.white),
             flexibleSpace: FlexibleSpaceBar(
               stretchModes: const [StretchMode.zoomBackground, StretchMode.blurBackground],
@@ -116,8 +118,8 @@ class MealDetailView extends StatelessWidget {
                                 Container(
                                   width: 8,
                                   height: 8,
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange[800],
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.primary,
                                     shape: BoxShape.circle,
                                   ),
                                 ),

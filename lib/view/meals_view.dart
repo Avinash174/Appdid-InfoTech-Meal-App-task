@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/meal_controller.dart';
-import 'meal_detail_view.dart';
+import '../routes/app_routes.dart';
+import '../core/theme/app_colors.dart';
+import '../core/utils/responsive_helper.dart';
 
 class MealsView extends StatelessWidget {
   final String categoryName;
@@ -12,13 +14,13 @@ class MealsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFBFBFB),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(categoryName, 
           style: TextStyle(color: Colors.grey[900], fontWeight: FontWeight.w900, fontSize: 22)),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.surface,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Color(0xFFE65100)),
+        iconTheme: const IconThemeData(color: AppColors.primaryDark),
       ),
       body: Obx(() {
         if (mealController.isLoading.value) {
@@ -47,13 +49,13 @@ class MealsView extends StatelessWidget {
                 onTap: () async {
                   await mealController.fetchMealDetail(meal.idMeal!);
                   if (mealController.selectedMeal.value != null) {
-                    Get.to(() => MealDetailView(meal: mealController.selectedMeal.value!));
+                    Get.toNamed(AppRoutes.mealDetail, arguments: mealController.selectedMeal.value!);
                   }
                 },
                 child: Container(
-                  height: 120,
+                  height: ResponsiveHelper.h(15),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.surface,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
@@ -71,8 +73,8 @@ class MealsView extends StatelessWidget {
                           borderRadius: const BorderRadius.horizontal(left: Radius.circular(24)),
                           child: Image.network(
                             meal.strMealThumb!,
-                            width: 120,
-                            height: 120,
+                            width: ResponsiveHelper.w(30),
+                            height: ResponsiveHelper.h(15),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -86,8 +88,8 @@ class MealsView extends StatelessWidget {
                             children: [
                               Text(
                                 meal.strMeal!,
-                                style: const TextStyle(
-                                  fontSize: 18, 
+                                style: TextStyle(
+                                  fontSize: 18 * ResponsiveHelper.fontScale, 
                                   fontWeight: FontWeight.w800,
                                   height: 1.2,
                                 ),

@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import '../controller/auth_controller.dart';
 import '../controller/meal_controller.dart';
 import '../model/category_model.dart';
-import 'meals_view.dart';
-import 'meal_detail_view.dart';
+import '../routes/app_routes.dart';
+import '../core/theme/app_colors.dart';
+import '../core/utils/responsive_helper.dart';
 import 'search_delegate.dart';
 
 class HomeView extends StatelessWidget {
@@ -16,7 +17,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFBFBFB),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text('Recipe Explorer', 
           style: TextStyle(
@@ -41,7 +42,7 @@ class HomeView extends StatelessWidget {
               await mealController.fetchRandomMeal();
               mealController.isLoading.value = false;
               if (mealController.selectedMeal.value != null) {
-                Get.to(() => MealDetailView(meal: mealController.selectedMeal.value!));
+                Get.toNamed(AppRoutes.mealDetail, arguments: mealController.selectedMeal.value!);
               }
             },
           ),
@@ -89,11 +90,11 @@ class HomeView extends StatelessWidget {
             SliverPadding(
               padding: const EdgeInsets.all(20),
               sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: ResponsiveHelper.isTablet ? 3 : 2,
                   childAspectRatio: 0.8,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
+                  crossAxisSpacing: ResponsiveHelper.w(5),
+                  mainAxisSpacing: ResponsiveHelper.w(5),
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
@@ -128,7 +129,7 @@ class HomeView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         mealController.fetchMealsByCategory(category.strCategory!);
-        Get.to(() => MealsView(categoryName: category.strCategory!));
+        Get.toNamed(AppRoutes.meals, arguments: category.strCategory!);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -167,9 +168,9 @@ class HomeView extends StatelessWidget {
                 children: [
                   Text(
                     category.strCategory!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      fontSize: 18,
+                      fontSize: 18 * ResponsiveHelper.fontScale,
                     ),
                   ),
                   const SizedBox(height: 4),

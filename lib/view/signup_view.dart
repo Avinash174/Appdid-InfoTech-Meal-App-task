@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/auth_controller.dart';
-import 'home_view.dart';
+import '../routes/app_routes.dart';
+import '../core/theme/app_colors.dart';
+import '../core/utils/responsive_helper.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -42,7 +44,7 @@ class _SignupViewState extends State<SignupView> {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: EdgeInsets.symmetric(horizontal: ResponsiveHelper.w(8)),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -149,7 +151,7 @@ class _SignupViewState extends State<SignupView> {
                               passwordController.text
                             );
                             if (success) {
-                              Get.offAll(() => HomeView());
+                              Get.offAllNamed(AppRoutes.home);
                             }
                           }
                         },
@@ -166,7 +168,7 @@ class _SignupViewState extends State<SignupView> {
                           Text("Already have an account?", style: TextStyle(color: Colors.grey[700])),
                           TextButton(
                             onPressed: () => Get.back(),
-                            child: Text('Login', style: TextStyle(color: Colors.orange[900], fontWeight: FontWeight.bold)),
+                            child: const Text('Login', style: TextStyle(color: AppColors.primaryDark, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),

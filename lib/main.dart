@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,8 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'services/auth_service.dart';
 import 'controller/auth_controller.dart';
-import 'view/login_view.dart';
-import 'view/home_view.dart';
+import 'routes/app_pages.dart';
+import 'routes/app_routes.dart';
+import 'core/theme/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -18,7 +18,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  if (!kIsWeb && Platform.isAndroid) {
+  if (defaultTargetPlatform == TargetPlatform.android) {
     await GoogleSignIn.instance.initialize();
   }
 
@@ -40,13 +40,15 @@ class MyApp extends StatelessWidget {
       title: 'Recipe Explorer',
       theme: ThemeData(
         useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.background,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFFF9800),
+          seedColor: AppColors.primary,
           brightness: Brightness.light,
         ),
         textTheme: GoogleFonts.outfitTextTheme(),
       ),
-      home: Obx(() => authService.isLoggedIn ? HomeView() : LoginView()),
+      initialRoute: authService.isLoggedIn ? AppRoutes.home : AppRoutes.login,
+      getPages: AppPages.pages,
     );
   }
 }

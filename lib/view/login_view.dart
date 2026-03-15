@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/auth_controller.dart';
-import 'home_view.dart';
-import 'signup_view.dart';
+import '../routes/app_routes.dart';
+import '../core/theme/app_colors.dart';
+import '../core/utils/responsive_helper.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -29,7 +30,7 @@ class _LoginViewState extends State<LoginView> {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: [Color(0xFFFFF3E0), Color(0xFFFFE0B2), Color(0xFFFFCC80)],
+                colors: [AppColors.grey100, AppColors.primaryLight, AppColors.primaryLight],
               ),
             ),
           ),
@@ -37,7 +38,7 @@ class _LoginViewState extends State<LoginView> {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: EdgeInsets.symmetric(horizontal: ResponsiveHelper.w(8)),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -143,7 +144,7 @@ class _LoginViewState extends State<LoginView> {
                               passwordController.text
                             );
                             if (success) {
-                              Get.offAll(() => HomeView());
+                              Get.offAllNamed(AppRoutes.home);
                             }
                           }
                         },
@@ -165,7 +166,7 @@ class _LoginViewState extends State<LoginView> {
                         onPressed: authController.isLoading.value ? null : () async {
                           final success = await authController.googleLogin();
                           if (success) {
-                            Get.offAll(() => HomeView());
+                            Get.offAllNamed(AppRoutes.home);
                           }
                         },
                         icon: Image.network(
@@ -190,8 +191,8 @@ class _LoginViewState extends State<LoginView> {
                         children: [
                           Text("Don't have an account?", style: TextStyle(color: Colors.grey[700])),
                           TextButton(
-                            onPressed: () => Get.to(() => const SignupView()),
-                            child: Text('Sign Up', style: TextStyle(color: Colors.orange[900], fontWeight: FontWeight.bold)),
+                            onPressed: () => Get.toNamed(AppRoutes.signup),
+                            child: const Text('Sign Up', style: TextStyle(color: AppColors.primaryDark, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),
