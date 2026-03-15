@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "425124793632",
+    "project_id": "recipe-task-final-m-001",
+    "storage_bucket": "recipe-task-final-m-001.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425124793632:android:0185ab0221659604551b45",
+        "android_client_info": {
+          "package_name": "com.example.task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425124793632-b31pqqiid2tu606ncav5e65vv9hjn31d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.task",
+            "certificate_hash": "f1f802223b79634dee52e8ae6fb978c98085e5b1"
+          }
+        },
+        {
+          "client_id": "425124793632-noaa3l9c8l5osjnmudii05frn5aavq0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSTOvPraDzip7zTVSG39e6ztYje6SNG-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425124793632-noaa3l9c8l5osjnmudii05frn5aavq0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

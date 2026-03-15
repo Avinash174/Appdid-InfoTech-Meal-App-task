@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "providers": {
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "Recipe Explorer",
+        "supportEmail": "avinashmagar15@gmail.com"
+      }
+    }
+  }
+}
