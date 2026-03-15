@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.outfitTextTheme(),
       ),
       // Use Obx to listen to auth state changes for initial route
-      home: Obx(() => authService.firebaseUser.value != null ? HomeView() : LoginView()),
+      home: Obx(() => authService.isLoggedIn ? HomeView() : LoginView()),
     );
   }
 }

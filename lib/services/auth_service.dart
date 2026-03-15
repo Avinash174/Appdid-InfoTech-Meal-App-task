@@ -1,22 +1,48 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService extends GetxService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   Rx<User?> firebaseUser = Rx<User?>(null);
+  RxBool isAdminLoggedIn = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     firebaseUser.bindStream(_auth.authStateChanges());
+    _loadSessions();
+
+    // Sync Firebase state to SharedPreferences for extra durability
+    ever(firebaseUser, (User? user) async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('is_firebase_logged_in', user != null);
+    });
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> _loadSessions() async {
+    final prefs = await SharedPreferences.getInstance();
+    isAdminLoggedIn.value = prefs.getBool('is_admin_logged_in') ?? false;
+    // We don't manually set firebaseUser, Firebase handles that, 
+    // but the ever() listener will keep prefs in sync.
+  }
+
+  bool get isLoggedIn => firebaseUser.value != null || isAdminLoggedIn.value;
+
+  Future<void> login(String usernameOrEmail, String password) async {
+    // 1. Check for Admin Login (Requirement 1)
+    if (usernameOrEmail == 'admin' && password == '1234') {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('is_admin_logged_in', true);
+      isAdminLoggedIn.value = true;
+      return;
+    }
+
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: usernameOrEmail, password: password);
     } on FirebaseAuthException catch (e) {
       String message = 'An error occurred';
       if (e.code == 'user-not-found') {
@@ -39,12 +65,17 @@ class AuthService extends GetxService {
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
 
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
+      final AuthCredential cred = GoogleAuthProvider.credential(
         accessToken: null,
         idToken: googleAuth.idToken,
       );
 
-      return await _auth.signInWithCredential(credential);
+      final UserCredential credential = await _auth.signInWithCredential(cred);
+      if (credential.user != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('is_firebase_logged_in', true);
+      }
+      return credential;
     } catch (e) {
       Get.snackbar('Google Sign-In Error', e.toString(),
           snackPosition: SnackPosition.BOTTOM,
@@ -73,6 +104,10 @@ class AuthService extends GetxService {
   }
 
   Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('is_admin_logged_in', false);
+    await prefs.setBool('is_firebase_logged_in', false);
+    isAdminLoggedIn.value = false;
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
