@@ -14,7 +14,9 @@ class MealsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(categoryName)),
       body: Obx(() {
-        if (mealController.isLoading.value) return const Center(child: CircularProgressIndicator());
+        if (mealController.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
         return ListView.builder(
           padding: EdgeInsets.all(4.w),
           itemCount: mealController.meals.length,
@@ -25,7 +27,10 @@ class MealsView extends StatelessWidget {
               child: ListTile(
                 leading: Hero(
                   tag: 'meal-${meal.idMeal}',
-                  child: ClipRRect(borderRadius: BorderRadius.circular(8), child: Image.network(meal.strMealThumb!, width: 60, height: 60, fit: BoxFit.cover)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8), 
+                    child: Image.network(meal.strMealThumb!, width: 60, height: 60, fit: BoxFit.cover)
+                  ),
                 ),
                 title: Text(meal.strMeal!, style: const TextStyle(fontWeight: FontWeight.bold)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),

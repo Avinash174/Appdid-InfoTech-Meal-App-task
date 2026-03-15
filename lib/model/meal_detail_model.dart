@@ -6,6 +6,8 @@ class MealDetailModel {
   String? strInstructions;
   String? strMealThumb;
   String? strYoutube;
+  String? strSource;
+  String? strTags;
   List<String>? ingredients;
   List<String>? measures;
 
@@ -17,6 +19,8 @@ class MealDetailModel {
     this.strInstructions,
     this.strMealThumb,
     this.strYoutube,
+    this.strSource,
+    this.strTags,
     this.ingredients,
     this.measures,
   });
@@ -29,6 +33,8 @@ class MealDetailModel {
     strInstructions = json['strInstructions'];
     strMealThumb = json['strMealThumb'];
     strYoutube = json['strYoutube'];
+    strSource = json['strSource'];
+    strTags = json['strTags'];
     
     ingredients = [];
     measures = [];

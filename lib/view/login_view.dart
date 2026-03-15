@@ -8,10 +8,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // GetX handles the business logic here
     final auth = Get.find<AuthController>();
-    
-    // Form controllers
     final emailCtrl = TextEditingController();
     final passCtrl = TextEditingController();
     final formKey = GlobalKey<FormState>();
@@ -26,8 +23,6 @@ class LoginView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 30),
-                
-                // Greeting section
                 const Text(
                   'Welcome Back',
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, letterSpacing: -0.5),
@@ -37,10 +32,7 @@ class LoginView extends StatelessWidget {
                   'Login to your account',
                   style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
                 ),
-                
                 const SizedBox(height: 40),
-                
-                // Email input
                 TextFormField(
                   controller: emailCtrl,
                   keyboardType: TextInputType.emailAddress,
@@ -51,15 +43,16 @@ class LoginView extends StatelessWidget {
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                   validator: (val) {
-                    if (val == null || val.isEmpty) return 'Please enter your email';
-                    if (!val.contains('@')) return 'Enter a valid email address';
+                    if (val == null || val.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    if (!val.contains('@')) {
+                      return 'Enter a valid email address';
+                    }
                     return null;
                   },
                 ),
-                
                 const SizedBox(height: 16),
-                
-                // Password input
                 TextFormField(
                   controller: passCtrl,
                   obscureText: true,
@@ -69,12 +62,14 @@ class LoginView extends StatelessWidget {
                     prefixIcon: const Icon(Icons.lock_outline),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  validator: (val) => (val == null || val.isEmpty) ? 'Password is required' : null,
+                  validator: (val) {
+                    if (val == null || val.isEmpty) {
+                      return 'Password is required';
+                    }
+                    return null;
+                  },
                 ),
-                
                 const SizedBox(height: 32),
-                
-                // Primary Login Button
                 Obx(() => SizedBox(
                   width: double.infinity,
                   height: 52,
@@ -82,7 +77,9 @@ class LoginView extends StatelessWidget {
                     onPressed: auth.isLoading.value ? null : () async {
                       if (formKey.currentState!.validate()) {
                         final success = await auth.login(emailCtrl.text.trim(), passCtrl.text);
-                        if (success) Get.offAllNamed(AppRoutes.home);
+                        if (success) {
+                          Get.offAllNamed(AppRoutes.home);
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -96,8 +93,6 @@ class LoginView extends StatelessWidget {
                       : const Text('LOGIN', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   ),
                 )),
-                
-                // Social Login Divider
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   child: Row(
@@ -111,15 +106,15 @@ class LoginView extends StatelessWidget {
                     ],
                   ),
                 ),
-                
-                // Google Login Option
                 Obx(() => SizedBox(
                   width: double.infinity,
                   height: 52,
                   child: OutlinedButton(
                     onPressed: auth.isLoading.value ? null : () async {
                       final success = await auth.googleLogin();
-                      if (success) Get.offAllNamed(AppRoutes.home);
+                      if (success) {
+                        Get.offAllNamed(AppRoutes.home);
+                      }
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Colors.grey.shade300),
@@ -130,7 +125,6 @@ class LoginView extends StatelessWidget {
                       : const Text('CONTINUE WITH GOOGLE', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black87)),
                   ),
                 )),
-                
                 const SizedBox(height: 20),
               ],
             ),

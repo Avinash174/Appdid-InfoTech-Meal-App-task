@@ -6,7 +6,6 @@ import '../app_config.dart';
 import 'search_delegate.dart';
 
 class HomeView extends StatelessWidget {
-  // Inject our controllers
   final mealController = Get.put(MealController());
   final authController = Get.find<AuthController>();
 
@@ -18,13 +17,10 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('App', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
-          // 1. Search button
           IconButton(
             icon: const Icon(Icons.search), 
             onPressed: () => showSearch(context: context, delegate: MealSearchDelegate()),
           ),
-          
-          // 2. Random Meal button (requirement #6)
           IconButton(
             icon: const Icon(Icons.shuffle),
             tooltip: 'Surprise Me',
@@ -35,8 +31,6 @@ class HomeView extends StatelessWidget {
               }
             },
           ),
-
-          // 3. Logout button
           IconButton(
             icon: const Icon(Icons.logout), 
             onPressed: () => authController.logout(),
@@ -44,12 +38,9 @@ class HomeView extends StatelessWidget {
         ],
       ),
       body: Obx(() {
-        // Show loader if we're fetching categories for the first time
         if (mealController.isLoading.value && mealController.categories.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
-        
-        // Grid display for all categories
         return GridView.builder(
           padding: EdgeInsets.all(4.w),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
