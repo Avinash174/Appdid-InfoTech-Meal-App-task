@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     final auth = Get.find<AuthService>();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Recipe App',
+      title: 'App',
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.background,

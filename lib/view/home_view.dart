@@ -19,7 +19,7 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: Obx(() => Column(
           children: [
-            const Text('Recipe App', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('App', style: TextStyle(fontWeight: FontWeight.bold)),
             if (authService.loggedInUserIdentifier.isNotEmpty)
               Text(
                 authService.loggedInUserIdentifier.value,
