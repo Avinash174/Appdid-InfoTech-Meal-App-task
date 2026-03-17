@@ -35,18 +35,17 @@ class LoginView extends StatelessWidget {
                 const SizedBox(height: 40),
                 TextFormField(
                   controller: emailCtrl,
-                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Email Address',
-                    hintText: 'e.g. user@example.com',
-                    prefixIcon: const Icon(Icons.mail_outline),
+                    labelText: 'Username',
+                    hintText: 'Enter your username or email',
+                    prefixIcon: const Icon(Icons.person_outline),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  validator: (val) {
+                   validator: (val) {
                     if (val == null || val.isEmpty) {
-                      return 'Please enter your email';
+                      return 'Please enter your email or username';
                     }
-                    if (!val.contains('@')) {
+                    if (val != 'admin' && !val.contains('@')) {
                       return 'Enter a valid email address';
                     }
                     return null;

@@ -27,8 +27,8 @@ class AuthService extends GetxService {
 
   bool get isLoggedIn => firebaseUser.value != null || isAdminLoggedIn.value;
 
-  Future<void> login(String usernameOrEmail, String password) async {
-    if (usernameOrEmail == 'admin' && password == '1234') {
+   Future<void> login(String usernameOrEmail, String password) async {
+    if (usernameOrEmail == 'admin' && (password == '1234' || password == 'admin')) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('is_admin_logged_in', true);
       isAdminLoggedIn.value = true;
@@ -44,8 +44,16 @@ class AuthService extends GetxService {
         message = 'Wrong password provided.';
       } else if (e.code == 'invalid-email') {
         message = 'The email address is badly formatted.';
+      } else if (e.code == 'network-request-failed') {
+        message = 'Network error. Please check your connection.';
       }
       Get.snackbar('Login Error', message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Get.theme.colorScheme.errorContainer,
+          colorText: Get.theme.colorScheme.onErrorContainer);
+      rethrow;
+    } catch (e) {
+      Get.snackbar('Login Error', e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Get.theme.colorScheme.errorContainer,
           colorText: Get.theme.colorScheme.onErrorContainer);
