@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../controller/auth_controller.dart';
 import '../controller/meal_controller.dart';
 import '../app_config.dart';
+import '../services/auth_service.dart';
 import 'search_delegate.dart';
 
 class HomeView extends StatelessWidget {
@@ -13,9 +14,19 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Get.find<AuthService>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('App', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Obx(() => Column(
+          children: [
+            const Text('Recipe App', style: TextStyle(fontWeight: FontWeight.bold)),
+            if (authService.loggedInUserIdentifier.isNotEmpty)
+              Text(
+                authService.loggedInUserIdentifier.value,
+                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.normal, color: Colors.grey),
+              ),
+          ],
+        )),
         actions: [
           IconButton(
             icon: const Icon(Icons.search), 

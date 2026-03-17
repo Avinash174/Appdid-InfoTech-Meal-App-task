@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'services/auth_service.dart';
 import 'controller/auth_controller.dart';
@@ -15,6 +16,9 @@ void main() async {
   if (defaultTargetPlatform == TargetPlatform.android) {
     await GoogleSignIn.instance.initialize();
   }
+  
+  await SharedPreferences.getInstance();
+  
   Get.put(AuthService(), permanent: true);
   Get.put(AuthController(), permanent: true);
   runApp(const MyApp());

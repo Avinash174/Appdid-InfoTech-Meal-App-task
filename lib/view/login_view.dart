@@ -37,16 +37,13 @@ class LoginView extends StatelessWidget {
                   controller: emailCtrl,
                   decoration: InputDecoration(
                     labelText: 'Username',
-                    hintText: 'Enter your username or email',
+                    hintText: 'Enter your username',
                     prefixIcon: const Icon(Icons.person_outline),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                    validator: (val) {
                     if (val == null || val.isEmpty) {
-                      return 'Please enter your email or username';
-                    }
-                    if (val != 'admin' && !val.contains('@')) {
-                      return 'Enter a valid email address';
+                      return 'Please enter your username';
                     }
                     return null;
                   },

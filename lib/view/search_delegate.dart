@@ -21,7 +21,6 @@ class MealSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     if (query.isNotEmpty) {
-      // Use Future.microtask to avoid "setState() called during build" error
       Future.microtask(() => mealController.searchMeals(query));
     }
     

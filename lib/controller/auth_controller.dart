@@ -6,10 +6,10 @@ class AuthController extends GetxController {
   final AuthService _auth = Get.find<AuthService>();
   final RxBool isLoading = false.obs;
 
-  Future<bool> login(String email, String password) async {
+  Future<bool> login(String username, String password) async {
     try {
       isLoading.value = true;
-      await _auth.login(email, password);
+      await _auth.login(username, password);
       return true;
     } catch (e) {
       return false;
@@ -30,12 +30,11 @@ class AuthController extends GetxController {
     }
   }
 
-
   void logout() async {
     try {
       await _auth.logout();
     } catch (e) {
-      // safe logout
+      // Ignore errors on logout
     } finally {
       Get.offAllNamed(AppRoutes.login);
     }
