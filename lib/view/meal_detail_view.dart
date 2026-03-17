@@ -21,8 +21,7 @@ class MealDetailView extends StatelessWidget {
                 onPressed: () {
                   final text = 'Check out this delicious ${meal.strMeal}!\n\n'
                       'Ingredients: ${meal.ingredients?.take(5).join(', ')}...\n\n'
-                      'Instructions: ${meal.strInstructions?.substring(0, 100)}...\n\n'
-                      'Source: ${meal.strSource ?? 'TheMealDB'}';
+                      'Instructions: ${meal.strInstructions?.substring(0, 100)}...';
                   SharePlus.instance.share(ShareParams(text: text));
                 },
               ),
