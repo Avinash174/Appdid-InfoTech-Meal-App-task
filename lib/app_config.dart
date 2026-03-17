@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'view/login_view.dart';
-import 'view/signup_view.dart';
 import 'view/home_view.dart';
 import 'view/meals_view.dart';
 import 'view/meal_detail_view.dart';
@@ -17,7 +16,6 @@ class AppColors {
 
 class AppRoutes {
   static const String login = '/login';
-  static const String signup = '/signup';
   static const String home = '/home';
   static const String meals = '/meals';
   static const String mealDetail = '/meal-detail';
@@ -28,7 +26,6 @@ class AppRoutes {
       page: () => const LoginView(),
       transition: Transition.fadeIn,
     ),
-    GetPage(name: signup, page: () => const SignupView()),
     GetPage(name: home, page: () => HomeView()),
     GetPage(
       name: meals, 

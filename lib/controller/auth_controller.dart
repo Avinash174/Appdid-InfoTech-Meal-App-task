@@ -30,17 +30,6 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<bool> register(String email, String password) async {
-    try {
-      isLoading.value = true;
-      await _auth.register(email, password);
-      return true;
-    } catch (e) {
-      return false;
-    } finally {
-      isLoading.value = false;
-    }
-  }
 
   void logout() async {
     try {
